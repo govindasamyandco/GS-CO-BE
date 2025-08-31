@@ -11,7 +11,7 @@ export const getAllProducts = async (req, res) => {
 };
 
 export const addProduct = async (req, res) => {
-  const { name, category, stock, price, image } = req.body;
+  const { name, category, stock, price, image, size } = req.body;
 
   if (!name ) {
     return res.status(400).json({ message: 'Name are required' });
@@ -24,6 +24,7 @@ export const addProduct = async (req, res) => {
       stock,
       price,
       image,
+      size
     });
 
     await newProduct.save();
@@ -48,12 +49,12 @@ export const deleteProduct = async (req, res) => {
 // UPDATE a product
 export const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { name, category, stock, price, image } = req.body;
+  const { name, category, stock, price, image, size } = req.body;
 
   try {
     const updated = await Product.findByIdAndUpdate(
       id,
-      { name, category, stock, price, image },
+      { name, category, stock, price, image, size },
       { new: true }
     );
     if (!updated) return res.status(404).json({ message: 'Product not found' });
